@@ -1,0 +1,28 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test", "py_binary")
+load("@python_deps//:requirements.bzl", "requirement")
+
+py_library(
+    name = "linalg",
+    srcs = glob(["vector3.py"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("numpy")
+    ]
+)
+py_test(
+    name="basic_test",
+    srcs=glob(["test/*.py"]),
+    main="test/test_main.py",
+    deps=[
+        ":linalg",
+        requirement("pytest")
+    ]
+)
+py_binary(
+    name="runnable",
+    srcs=["run/runnable.py"],
+    deps=[
+        ":linalg",
+        requirement("numpy")
+    ]
+)
